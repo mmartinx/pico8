@@ -1,36 +1,60 @@
 pico-8 cartridge // http://www.pico-8.com
 version 16
 __lua__
-x = 0
-y = 0
-speed = 1.5
-last = 0
-
 paddle = {
 	x = 0,
 	y = 100,
-	w = 50,
-	h = 10,
-	c = 1
+	w = 30,
+	h = 5,
+	c = 1,
+	dx = 1.5
 }
 
 ball = {
-	x = 0,
-	y = 0,
+	x = 50,
+	y = 50,
 	r = 3,
 	c = 3
 }
 
+function draw_bricks()
+	offset_y = 10
+	
+	for brick in all(bricks) do
+		rectfill(brick.x * brick_w, 
+			brick.y * brick_h + offset_y,
+			(brick.x + 1) * brick_w,
+			(brick.y + 1) * brick_h + offset_y,
+			8)
+			
+	end
+end
 
 function _init()
 	last = time()
+	
+	brick_w = 16
+brick_h = 3
+i = 0
+
+bricks = {}
+
+for x = 0, 7 do
+	for y = 0, 4 do
+		add(bricks, {
+			x = x,
+			y = y,
+			v = true
+		})
+	end
+end
 end
 
-function _update()
+function _update60()
 	last = time()
 
-	if btn(0) then paddle.x -= speed
-	elseif btn(1) then paddle.x += speed
+	if btn(0) then paddle.x -= paddle.dx
+	elseif btn(1) then paddle.x += paddle.dx
 	end
 	
 	ball.x += 1;
@@ -38,16 +62,17 @@ function _update()
 end
 
 function _draw()
-	cls()
+	cls(2)
  draw_paddle(paddle)
+ draw_bricks(bricks)
+ draw_ball(ball)
 end
 
-function draw_paddle(paddle)
+function draw_paddle()
 	draw_rect(paddle)
-	draw_ball(ball)
 end
 
-function draw_ball(ball)
+function draw_ball()
 	circfill(ball.x, ball.y,
 		ball.r, ball.c)
 end
