@@ -6,6 +6,22 @@ y = 0
 speed = 1.5
 last = 0
 
+paddle = {
+	x = 0,
+	y = 100,
+	w = 50,
+	h = 10,
+	c = 1
+}
+
+ball = {
+	x = 0,
+	y = 0,
+	r = 3,
+	c = 3
+}
+
+
 function _init()
 	last = time()
 end
@@ -13,15 +29,34 @@ end
 function _update()
 	last = time()
 
-	if btn(0) then x -= speed
-		elseif btn(1) then x += speed
-		elseif btn(2) then y -= speed
-		elseif btn(3) then y += speed
+	if btn(0) then paddle.x -= speed
+	elseif btn(1) then paddle.x += speed
 	end
+	
+	ball.x += 1;
+	ball.y += 1;
 end
 
 function _draw()
-    print (last)
+	cls()
+ draw_paddle(paddle)
+end
+
+function draw_paddle(paddle)
+	draw_rect(paddle)
+	draw_ball(ball)
+end
+
+function draw_ball(ball)
+	circfill(ball.x, ball.y,
+		ball.r, ball.c)
+end
+
+function draw_rect(rectangle)
+	rectfill(rectangle.x, rectangle.y,
+		rectangle.x + rectangle.w, 
+		rectangle.y + rectangle.h, 
+		rectangle.c)
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
