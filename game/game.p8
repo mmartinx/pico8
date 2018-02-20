@@ -1,21 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 16
 __lua__
-paddle = {
-	x = 0,
-	y = 100,
-	w = 30,
-	h = 5,
-	c = 1,
-	dx = 1.5
-}
 
-ball = {
-	x = 50,
-	y = 50,
-	r = 3,
-	c = 3
-}
 
 function draw_bricks()
 	offset_y = 10
@@ -31,23 +17,39 @@ function draw_bricks()
 end
 
 function _init()
+  paddle = {
+    x = 0,
+    y = 120,
+    w = 30,
+    h = 5,
+    c = 1,
+    dx = 1.5
+  }
+
+  ball = {
+    x = 50,
+    y = 50,
+    r = 3,
+    c = 3
+  }
+
 	last = time()
 	
 	brick_w = 16
-brick_h = 3
-i = 0
+	brick_h = 3
+	i = 0
 
-bricks = {}
+	bricks = {}
 
-for x = 0, 7 do
-	for y = 0, 4 do
-		add(bricks, {
-			x = x,
-			y = y,
-			v = true
-		})
+	for x = 0, 7 do
+		for y = 0, 4 do
+			add(bricks, {
+				x = x,
+				y = y,
+				v = true
+			})
+		end
 	end
-end
 end
 
 function _update60()
